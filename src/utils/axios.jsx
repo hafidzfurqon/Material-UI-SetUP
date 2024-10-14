@@ -55,5 +55,6 @@ export const endpoints = {
     tambah: 'api/user/tambah',
     tampilkan: '/api/user/tampilkan',
     edit: '/api/user/edit',
+    import: '/api/user/import',
   },
 };

@@ -154,6 +154,10 @@ const CreateUserView = () => {
                 <MenuItem value="pembina">Pembina</MenuItem>
                 <MenuItem value="mentor">Mentor</MenuItem>
                 <MenuItem value="alumni">Alumni</MenuItem>
+                <MenuItem value="bph">BPH</MenuItem>
+                <MenuItem value="pengurus_kegiatan">Pengurus Kegiatan</MenuItem>
+                <MenuItem value="pengurus_dokumentasi">Pengurus Dokumentasi</MenuItem>
+                <MenuItem value="pengurus_rohis">Pengurus Rohis</MenuItem>
               </Select>
             </FormLabel>
             <Box sx={{ display: 'flex', gap: 2, py: 2 }}>

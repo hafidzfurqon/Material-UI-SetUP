@@ -3,5 +3,6 @@ export const router = {
   users: {
     list: '/user',
     create: '/user/create',
+    import: '/user/import'
   },
 };

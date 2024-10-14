@@ -13,6 +13,9 @@ import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 
+import { formatDistanceToNow } from 'date-fns';
+import { id } from 'date-fns/locale';
+
 // ----------------------------------------------------------------------
 
 export type UserProps = {
@@ -26,6 +29,7 @@ export type UserProps = {
   divisi: string;
   kelas: string;
   jurusan: string;
+  last_online_at?: string;
 };
 
 type UserTableRowProps = {
@@ -45,6 +49,24 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
     setOpenPopover(null);
   }, []);
 
+  const roleOrder = [
+    'pembina',
+    'mentor',
+    'alumni',
+    'bph',
+    'pengurus_kegiatan',
+    'pengurus_dokumentasi',
+    'pengurus_rohis',
+  ];
+
+  const formatRoleName = (role: string) => {
+    return role
+      .replace(/_/g, ' ') // Ganti underscore dengan spasi
+      .split(' ') // Pisahkan berdasarkan spasi
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Kapital huruf pertama setiap kata
+      .join(' '); // Gabungkan kembali menjadi string
+  };
+
   return (
     <>
       <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
@@ -63,14 +85,31 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
 
         <TableCell>{row.jurusan}</TableCell>
 
-        {row.roles.map((nama: any, idx: number) => (
-          <TableCell align="center" key={idx}>
-            {nama.name}
-          </TableCell>
-        ))}
+        <TableCell>{row.divisi}</TableCell>
+
+        <TableCell align="center">
+          {roleOrder
+            .map((role) => {
+              const foundRole = row.roles.find((nama: any) => nama.name === role);
+              return foundRole ? formatRoleName(foundRole.name) : null;
+            })
+            .filter(Boolean)
+            .join(', ')}
+        </TableCell>
 
         <TableCell>
-          <Label color={(row.status === 'banned' && 'error') || 'success'}>{row.status}</Label>
+          <Label color={row.status === 'Offline' ? 'error' : 'success'}>{row.status}</Label>
+        </TableCell>
+
+        <TableCell>
+          {row.status === 'Offline' && row.last_online_at && (
+            <div>
+              {`${formatDistanceToNow(new Date(row.last_online_at), {
+                addSuffix: true,
+                locale: id,
+              })}`}
+            </div>
+          )}
         </TableCell>
 
         <TableCell align="right">

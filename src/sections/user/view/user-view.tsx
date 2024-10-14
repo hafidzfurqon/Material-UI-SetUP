@@ -52,15 +52,26 @@ export function UserView() {
         <Typography variant="h4" flexGrow={1}>
           Users
         </Typography>
-        <Link to={router.users.create}>
-          <Button
-            variant="contained"
-            color="inherit"
-            startIcon={<Iconify icon="mingcute:add-line" />}
-          >
-            Tambah user
-          </Button>
-        </Link>
+        <Box display="flex" gap={2}> {/* Tambahkan gap antara tombol */}
+          <Link to={router.users.create}>
+            <Button
+              variant="contained"
+              color="inherit"
+              startIcon={<Iconify icon="mingcute:add-line" />}
+            >
+              Tambah user
+            </Button>
+          </Link>
+          <Link to={router.users.import}> {/* Ganti dengan route import yang sesuai */}
+            <Button
+              variant="contained"
+              color="inherit"
+              startIcon={<Iconify icon="mingcute:excel-line" />} // Ganti icon menjadi excel
+            >
+              Import
+            </Button>
+          </Link>
+        </Box>
       </Box>
 
       <Card>
@@ -90,11 +101,13 @@ export function UserView() {
                 headLabel={[
                   { id: 'name', label: 'Name' },
                   { id: 'kelas', label: 'Kelas' },
+                  { id: 'jurusan', label: 'Jurusan' },
                   { id: 'divisi', label: 'Divisi' },
                   { id: 'role', label: 'Role', align: 'center' },
                   { id: 'status', label: 'Status' },
+                  { id: 'last_online_at', label: 'Terakhir Online' }, // Tambahkan ini untuk menampilkan kolom "Last Online"
                   { id: '', label: 'Aksi' },
-                ]}
+                ]}                
               />
               <TableBody>
                 {dataFiltered
