@@ -9,12 +9,15 @@ import { AuthLayout } from 'src/layouts/auth';
 import { DashboardLayout } from 'src/layouts/dashboard';
 import { useQuery } from '@tanstack/react-query';
 import axiosInstance, { endpoints } from 'src/utils/axios';
+import { MentoringView } from 'src/sections/mentoring/view/mentoring-view';
+import CreateView from 'src/sections/mentoring/crud/CreateView';
 
 // ----------------------------------------------------------------------
 
 export const HomePage = lazy(() => import('src/pages/home'));
 export const BlogPage = lazy(() => import('src/pages/blog'));
 export const UserPage = lazy(() => import('src/pages/user'));
+export const MentoringPage = lazy(() => import('src/pages/mentoring'));
 export const SignInPage = lazy(() => import('src/pages/sign-in'));
 export const ProductsPage = lazy(() => import('src/pages/products'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
@@ -47,14 +50,6 @@ const renderFallback = (
 );
 
 export function Router() {
-  const userId = sessionStorage.getItem('user_id');
-  const { data: authUser } = useQuery({
-    queryKey: ['usersData'],
-    queryFn: async () => {
-      const res = await axiosInstance.get(`${endpoints.auth.me}/${userId}`);
-      return res.data.data;
-    },
-  });
   return useRoutes([
     {
       element: (
@@ -87,6 +82,19 @@ export function Router() {
           element: <ProductsPage />,
         },
         { path: 'blog', element: <BlogPage /> },
+        {
+          path: 'mentoring',
+          children: [
+            {
+              path: '',
+              element: <MentoringPage />,
+            },
+            {
+              path: 'create',
+              element: <CreateView />,
+            },
+          ],
+        },
       ],
     },
     {

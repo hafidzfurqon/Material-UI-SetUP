@@ -9,7 +9,6 @@ import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
-import { _users } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Iconify } from 'src/components/iconify';
@@ -52,7 +51,9 @@ export function UserView() {
         <Typography variant="h4" flexGrow={1}>
           Users
         </Typography>
-        <Box display="flex" gap={2}> {/* Tambahkan gap antara tombol */}
+        <Box display="flex" gap={2}>
+          {' '}
+          {/* Tambahkan gap antara tombol */}
           <Link to={router.users.create}>
             <Button
               variant="contained"
@@ -62,7 +63,9 @@ export function UserView() {
               Tambah user
             </Button>
           </Link>
-          <Link to={router.users.import}> {/* Ganti dengan route import yang sesuai */}
+          <Link to={router.users.import}>
+            {' '}
+            {/* Ganti dengan route import yang sesuai */}
             <Button
               variant="contained"
               color="inherit"
@@ -107,7 +110,7 @@ export function UserView() {
                   { id: 'status', label: 'Status' },
                   { id: 'last_online_at', label: 'Terakhir Online' }, // Tambahkan ini untuk menampilkan kolom "Last Online"
                   { id: '', label: 'Aksi' },
-                ]}                
+                ]}
               />
               <TableBody>
                 {dataFiltered

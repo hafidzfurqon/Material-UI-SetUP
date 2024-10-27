@@ -39,7 +39,7 @@ export default function App() {
     <ThemeProvider>
       <Router />
       {/* {githubButton} */}
-      <Toaster />
+      <Toaster position="top-right" />
     </ThemeProvider>
   );
 }

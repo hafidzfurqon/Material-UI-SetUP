@@ -50,6 +50,14 @@ export const endpoints = {
     tampilkan: '/api/kegiatan/tampilkan',
     edit: '/api/kegiatan/edit',
   },
+
+  mentoring: {
+    semua: '/api/mentoring',
+    tambah: 'api/mentoring/tambah',
+    tampilkan: '/api/mentoring/tampilkan',
+    edit: '/api/mentoring/edit',
+    hapus: '/api/mentoring/hapus',
+  },
   users: {
     semua: '/api/user',
     tambah: 'api/user/tambah',

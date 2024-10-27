@@ -1,4 +1,13 @@
-import { Container, FormLabel, MenuItem, Select, Stack, TextField, Button, Typography } from '@mui/material';
+import {
+  Container,
+  FormLabel,
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+  Button,
+  Typography,
+} from '@mui/material';
 import { Box } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
@@ -43,7 +52,7 @@ const CreateUserView = () => {
 
   return (
     <Container>
-      <Typography variant='h4'>Tambah User baru disini</Typography>
+      <Typography variant="h4">Tambah User baru disini</Typography>
       <Box sx={{ mt: 5 }}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing={3}>
@@ -131,14 +140,12 @@ const CreateUserView = () => {
             <FormLabel>
               Image
               <TextField
-                {...register('image', { required: 'Image is required' })}
+                {...register('image')}
                 margin="dense"
                 id="image"
                 type="file"
                 fullWidth
                 variant="outlined"
-                error={!!errors.image}
-                helperText={errors.image?.message}
               />
             </FormLabel>
             <FormLabel>

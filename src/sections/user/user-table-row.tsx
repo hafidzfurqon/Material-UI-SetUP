@@ -102,13 +102,15 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
         </TableCell>
 
         <TableCell>
-          {row.status === 'Offline' && row.last_online_at && (
+          {row.status === 'Offline' && row.last_online_at ? (
             <div>
               {`${formatDistanceToNow(new Date(row.last_online_at), {
                 addSuffix: true,
                 locale: id,
               })}`}
             </div>
+          ) : (
+            <Box>Not Found</Box>
           )}
         </TableCell>
 

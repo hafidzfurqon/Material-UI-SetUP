@@ -29,10 +29,15 @@ export const navData = [
     ),
   },
   {
-    title: 'Blog',
-    path: '/blog',
+    title: 'Mentoring',
+    path: '/mentoring',
     icon: icon('ic-blog'),
   },
+  // {
+  //   title: 'Blog',
+  //   path: '/blog',
+  //   icon: icon('ic-blog'),
+  // },
   {
     title: 'Sign in',
     path: '/sign-in',

@@ -8,6 +8,7 @@ import { useFetchKegiatan } from 'src/hooks/kegiatan';
 
 export function LandingPage() {
   const { data, isLoading, isFetching } = useFetchKegiatan();
+  console.log(data);
   const itemData = [
     {
       img: '/assets/images/Banner pendaftaran Rohis.jpg',
@@ -205,7 +206,7 @@ export function LandingPage() {
         </Container>
       </Box>
 
-      {/* <Container
+      <Container
         sx={{
           pt: 5,
           pb: 5,
@@ -224,7 +225,8 @@ export function LandingPage() {
         >
           Kegiatan
         </Typography>
-      </Container> */}
+        <Grid container gap={3} justifyContent={{ xs: 'center' }}></Grid>
+      </Container>
       <Container
         sx={{
           pt: 5,
