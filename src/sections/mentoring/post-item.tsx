@@ -19,27 +19,14 @@ import { Dialog, DialogContent, DialogContentText } from '@mui/material';
 import { DialogTitle } from '@mui/material';
 import { DialogActions } from '@mui/material';
 import { Button } from '@mui/material';
+import { useMutationDeleteMentoring } from 'src/hooks/mentoring/useMutationDeleteMentoring';
+import toast from 'react-hot-toast';
+import { useQueryClient } from '@tanstack/react-query';
 
 // ----------------------------------------------------------------------
 
-export type PostItemProps = {
-  id: string;
-  title: string;
-  coverUrl: string;
-  totalViews: number;
-  description: string;
-  totalShares: number;
-  totalComments: number;
-  totalFavorites: number;
-  postedAt: string | number | null;
-  author: {
-    name: string;
-    avatarUrl: string;
-  };
-};
-
 export type MentoringItemProps = {
-  id: number;
+  id: any;
   materi_singkat: string;
   coverUrl: string;
   totalViews: number;
@@ -109,11 +96,25 @@ export function PostItem({
 
   const renderInfo = () => {
     const [open, setOpen] = useState(false);
+    const queryClient = useQueryClient();
+    const { mutate, isPending } = useMutationDeleteMentoring({
+      onSuccess: () => {
+        toast.success('Mentoring Berhasil Dihapus');
+        queryClient.invalidateQueries({ queryKey: ['mentoring'] });
+        setOpen(false);
+      },
+      onError: (err: any) => {
+        toast.error(err.message);
+      },
+    });
     const handleClickOpen = () => {
       setOpen(true);
     };
     const handleClose = () => {
       setOpen(false);
+    };
+    const handleSubmit = () => {
+      mutate(post.id);
     };
     return (
       <>
@@ -169,17 +170,41 @@ export function PostItem({
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
-            <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+            <DialogTitle id="alert-dialog-title">
+              Data akan dihapus secara permanen Yakin Hapus?
+            </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                Let Google help apps determine location. This means sending anonymous location data
-                to Google, even when no apps are running.
+                Setelah Tombol ya di klik data akan dihapus.
               </DialogContentText>
             </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose}>Disagree</Button>
-              <Button onClick={handleClose} autoFocus>
-                Agree
+            <DialogActions
+              sx={{
+                mx: 1.5,
+                py: 2,
+              }}
+            >
+              <Button
+                onClick={handleClose}
+                variant="outlined"
+                sx={{
+                  bgcolor: 'white',
+                  color: 'black',
+                }}
+              >
+                Batal
+              </Button>
+              <Button
+                onClick={handleSubmit}
+                sx={{
+                  bgcolor: 'red',
+                  color: 'white',
+                  '&:hover': {
+                    bgcolor: 'red',
+                  },
+                }}
+              >
+                {isPending ? 'Loading...' : 'Delete'}
               </Button>
             </DialogActions>
           </Dialog>

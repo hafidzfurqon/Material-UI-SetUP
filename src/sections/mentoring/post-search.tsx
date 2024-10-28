@@ -6,7 +6,7 @@ import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
 
 import { Iconify } from 'src/components/iconify';
 
-import type { MentoringItemProps, PostItemProps } from './post-item';
+import type { MentoringItemProps,  } from './post-item';
 
 // ----------------------------------------------------------------------
 
