@@ -6,6 +6,9 @@ import { SvgColor } from 'src/components/svg-color';
 const icon = (name: string) => (
   <SvgColor width="100%" height="100%" src={`/assets/icons/navbar/${name}.svg`} />
 );
+const Anothericon = (name: string) => (
+  <SvgColor width="100%" height="100%" src={`/assets/icons/glass/${name}.svg`} />
+);
 
 export const navData = [
   {
@@ -39,9 +42,9 @@ export const navData = [
   //   icon: icon('ic-blog'),
   // },
   {
-    title: 'Sign in',
-    path: '/sign-in',
-    icon: icon('ic-lock'),
+    title: 'Dokumentasi',
+    path: '/dokumentasi',
+    icon: Anothericon('ic-glass-message'),
   },
   {
     title: 'Not found',

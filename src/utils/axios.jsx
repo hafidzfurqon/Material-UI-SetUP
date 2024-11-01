@@ -1,10 +1,8 @@
 import axios from 'axios';
 
 // ----------------------------------------------------------------------
-const HOST_API = 'http://127.0.0.1:8000/';
+const HOST_API = import.meta.env.VITE_HOST_API;
 const axiosInstance = axios.create({ baseURL: HOST_API });
-
-// Request interceptor (tidak perlu menambahkan header Authorization karena menggunakan cookie HTTP-only)
 
 axiosInstance.interceptors.request.use(
   (config) => {
@@ -50,7 +48,12 @@ export const endpoints = {
     tampilkan: '/api/kegiatan/tampilkan',
     edit: '/api/kegiatan/edit',
   },
-
+  dokumentasi: {
+    semua: '/api/dokumentasi',
+    tambah: 'api/dokumentasi/tambah',
+    tampilkan: '/api/dokumentasi/tampilkan',
+    edit: '/api/dokumentasi/edit',
+  },
   mentoring: {
     semua: '/api/mentoring',
     tambah: 'api/mentoring/tambah',
