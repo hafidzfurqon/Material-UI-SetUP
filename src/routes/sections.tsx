@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import axiosInstance, { endpoints } from 'src/utils/axios';
 import { MentoringView } from 'src/sections/mentoring/view/mentoring-view';
 import CreateView from 'src/sections/mentoring/crud/CreateView';
+import CreateViewDokumentasi from 'src/sections/dokumentasi/crud/CreateViewDokumentasi';
 
 // ----------------------------------------------------------------------
 
@@ -105,7 +106,7 @@ export function Router() {
             },
             {
               path: 'create',
-              element: <CreateView />,
+              element: <CreateViewDokumentasi />,
             },
           ],
         },

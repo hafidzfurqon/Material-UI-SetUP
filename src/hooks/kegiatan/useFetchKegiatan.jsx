@@ -6,8 +6,8 @@ export const useFetchKegiatan = () => {
     queryKey: ['fetchKegiatan'],
     queryFn: async () => {
       const res = await axiosInstance.get(endpoints.kegiatan.semua);
-      console.log(res);
-      return res.data;
+      console.log(res.data.data)
+      return res.data.data;
     },
     retry: false,
   });

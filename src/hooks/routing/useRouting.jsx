@@ -9,4 +9,8 @@ export const router = {
     list: '/mentoring',
     create: '/mentoring/create',
   },
+  dokumentasi: {
+    list: '/dokumentasi',
+    create: '/dokumentasi/create',
+  },
 };

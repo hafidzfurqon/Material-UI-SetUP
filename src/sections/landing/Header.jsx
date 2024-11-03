@@ -7,6 +7,7 @@ import {
   useMediaQuery,
   Menu,
   MenuItem,
+  Button,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -47,6 +48,9 @@ export default function Header() {
             <IconButton size="large" edge="end" color="inherit" onClick={handleMenuClick}>
               <MenuIcon />
             </IconButton>
+            <Button variant="outlined" sx={{ bgcolor: 'ffffff' }}>
+              Login
+            </Button>
             <Menu
               anchorEl={anchorEl}
               open={Boolean(anchorEl)}
@@ -76,11 +80,6 @@ export default function Header() {
               <MenuItem onClick={handleClose}>
                 <Link to="/faq" style={{ color: 'white', textDecoration: 'none' }}>
                   FAQ&rsquo;s
-                </Link>
-              </MenuItem>
-              <MenuItem onClick={handleClose}>
-                <Link to="/sign-in" style={{ color: 'white', textDecoration: 'none' }}>
-                  Login
                 </Link>
               </MenuItem>
             </Menu>

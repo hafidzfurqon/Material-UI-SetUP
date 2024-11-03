@@ -1,21 +1,38 @@
-import { Typography, Box, Container, Grid, Button, ImageListItem, ImageList } from '@mui/material';
+import {
+  Typography,
+  Box,
+  Container,
+  Grid,
+  Button,
+  ImageListItem,
+  ImageList,
+  Card,
+} from '@mui/material';
 import Footer from './footer';
 import Header from './Header';
 import image from '../../../public/assets/images/Banner pendaftaran Rohis.jpg';
 import Backgrounds from '../../../public/assets/images/Background-Rohis.png';
 import image2 from '../../../public/assets/images/rohis-3.jpg';
 import { useFetchKegiatan } from 'src/hooks/kegiatan';
+import { fDate } from 'src/utils/format-time';
+import { CardMedia } from '@mui/material';
+import { CardContent } from '@mui/material';
+import { CardActions } from '@mui/material';
+import Loading from 'src/component/Loading';
 
 export function LandingPage() {
   const { data, isLoading, isFetching } = useFetchKegiatan();
-  console.log(data);
+  if (isLoading || isFetching) {
+    return <Loading />;
+  }
+
   const itemData = [
     {
       img: '/assets/images/Banner pendaftaran Rohis.jpg',
       title: 'Breakfast',
     },
     {
-      img: '/assets/images/Banner pendaftaran Rohis.jpg',
+      img: `${image2}`,
       title: 'Sea star',
     },
     {
@@ -225,7 +242,26 @@ export function LandingPage() {
         >
           Kegiatan
         </Typography>
-        <Grid container gap={3} justifyContent={{ xs: 'center' }}></Grid>
+        <Grid container gap={3} justifyContent={{ xs: 'center' }}>
+          {data?.data?.map((kegiatan, idx) => (
+            <Card key={idx} sx={{ maxWidth: 345 }}>
+              <CardMedia sx={{ height: 140 }} image={kegiatan.image} title="green iguana" />
+              <CardContent sx={{ px: 3, py: 2 }}>
+                <Typography gutterBottom variant="h5" component="div">
+                  {kegiatan.judul}
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                  {kegiatan.deskripsi}
+                </Typography>
+              </CardContent>
+              <CardActions sx={{ pb: 3, px: 3 }}>
+                <Button size="medium" variant="outlined">
+                  Lihat Selengkapnya
+                </Button>
+              </CardActions>
+            </Card>
+          ))}
+        </Grid>
       </Container>
       <Container
         sx={{

@@ -71,7 +71,7 @@ export function applyFilter({ inputData, comparator, filterName }: ApplyFilterPr
 
   if (filterName) {
     inputData = inputData.filter(
-      (user) => user.judul.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+      (dokumentasi) => dokumentasi.judul.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 

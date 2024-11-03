@@ -55,7 +55,7 @@ export function Dokumentasi() {
         <Box display="flex" gap={2}>
           {' '}
           {/* Tambahkan gap antara tombol */}
-          <Link to={router.users.create}>
+          <Link to={router.dokumentasi.create}>
             <Button
               variant="contained"
               color="inherit"
