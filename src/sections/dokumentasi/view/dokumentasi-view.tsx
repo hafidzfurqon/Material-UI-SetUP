@@ -26,17 +26,15 @@ import { useFetchAllUsers } from 'src/hooks/users';
 import { Link } from 'react-router-dom';
 import { router } from 'src/hooks/routing/useRouting';
 import { useFetchDokumentasi } from 'src/hooks/dokumentasi/useFetchDokumentasi';
-
+import Loading from 'src/component/Loading';
 // ----------------------------------------------------------------------
 
 export function Dokumentasi() {
   const table = useTable();
-  const { data, isLoading: Loading } = useFetchDokumentasi();
+  const { data, isLoading } = useFetchDokumentasi();
   const [filterName, setFilterName] = useState('');
-  // const { data, isLoading } = useFetchAllUsers();
-  // console.log(docs);
-  if (Loading) {
-    return <Box>Loading...</Box>;
+  if (isLoading) {
+    return <Loading />;
   }
 
   const dataFiltered: DokumentasiProps[] = applyFilter({

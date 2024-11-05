@@ -67,5 +67,6 @@ export const endpoints = {
     tampilkan: '/api/user/tampilkan',
     edit: '/api/user/edit',
     import: '/api/user/import',
+    hapus: '/api/user/hapus',
   },
 };

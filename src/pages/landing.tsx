@@ -11,7 +11,7 @@ export default function LandingPages() {
           name="description"
           content="The starting point for your next project with Minimal UI Kit, built on the newest version of Material-UI ©, ready to be customized to your style"
         />
-        <meta name="keywords" content="react,material,kit,application,dashboard,admin,template" />
+        <meta name="keywords" content="Rohis, Rodamu, Rohis-sknc,  Rohis Smkn 1 ciomas" />
       </Helmet>
 
       <LandingPage />

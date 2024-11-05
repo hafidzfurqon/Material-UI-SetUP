@@ -22,6 +22,7 @@ import { Button } from '@mui/material';
 import { useMutationDeleteMentoring } from 'src/hooks/mentoring/useMutationDeleteMentoring';
 import toast from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
+import { error } from 'src/hooks/error';
 
 // ----------------------------------------------------------------------
 
@@ -103,7 +104,7 @@ export function PostItem({
         queryClient.invalidateQueries({ queryKey: ['mentoring'] });
         setOpen(false);
       },
-      onError: (err: any) => {
+      onError: (err: error) => {
         toast.error(err.message);
       },
     });

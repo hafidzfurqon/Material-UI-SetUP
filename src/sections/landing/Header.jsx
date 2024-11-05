@@ -45,12 +45,14 @@ export default function Header() {
 
         {isMobile ? (
           <>
+            <Link to="/sign-in">
+              <Button size="small" variant="outlined" sx={{ bgcolor: 'white', color: 'black' }}>
+                Login
+              </Button>
+            </Link>
             <IconButton size="large" edge="end" color="inherit" onClick={handleMenuClick}>
               <MenuIcon />
             </IconButton>
-            {/* <Button variant="outlined" sx={{ bgcolor: 'ffffff' }}>
-              Login
-            </Button> */}
             <Menu
               anchorEl={anchorEl}
               open={Boolean(anchorEl)}
@@ -85,7 +87,11 @@ export default function Header() {
             </Menu>
           </>
         ) : (
-          <Stack direction="row" spacing={2}>
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+          >
             <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
               Home
             </Link>
@@ -98,8 +104,20 @@ export default function Header() {
             <Link to="/faq" style={{ color: 'white', textDecoration: 'none' }}>
               FAQ&rsquo;s
             </Link>
-            <Link to="/sign-in" style={{ color: 'white', textDecoration: 'none' }}>
-              Login
+            <Link to="/sign-in">
+              <Button
+                size="small"
+                variant="outlined"
+                sx={{
+                  bgcolor: 'white',
+                  color: 'black',
+                  '&:hover': {
+                    bgcolor: '#4d7c0f',
+                  },
+                }}
+              >
+                Login
+              </Button>
             </Link>
           </Stack>
         )}

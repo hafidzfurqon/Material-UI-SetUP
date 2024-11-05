@@ -9,6 +9,9 @@ const icon = (name: string) => (
 const Anothericon = (name: string) => (
   <SvgColor width="100%" height="100%" src={`/assets/icons/glass/${name}.svg`} />
 );
+const Kegiatanicon = (name: string) => (
+  <SvgColor width="100%" height="100%" src={`/assets/icons/glass/${name}.svg`} />
+);
 
 export const navData = [
   {
@@ -22,12 +25,12 @@ export const navData = [
     icon: icon('ic-user'),
   },
   {
-    title: 'Product',
+    title: 'Kegiatan',
     path: '/products',
-    icon: icon('ic-cart'),
+    icon: Kegiatanicon('ic-glass-users'),
     info: (
       <Label color="error" variant="inverted">
-        +3
+        ✨
       </Label>
     ),
   },

@@ -15,11 +15,16 @@ import { Iconify } from 'src/components/iconify';
 
 import { formatDistanceToNow } from 'date-fns';
 import { id } from 'date-fns/locale';
+import DialogDelete from 'src/component/DialogDelete';
+import { useMutationDeleteUser } from 'src/hooks/users';
+import { useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+import { error } from 'src/hooks/error';
 
 // ----------------------------------------------------------------------
 
 export type UserProps = {
-  id: string;
+  id: any;
   name: string;
   nama: string;
   roles: { name: string }[];
@@ -65,6 +70,26 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
       .split(' ') // Pisahkan berdasarkan spasi
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Kapital huruf pertama setiap kata
       .join(' '); // Gabungkan kembali menjadi string
+  };
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const queryClient = useQueryClient();
+  const { mutate, isPending } = useMutationDeleteUser({
+    onSuccess: () => {
+      toast.success('User Berhasil Dihapus');
+      queryClient.invalidateQueries({ queryKey: ['allUsers'] });
+      setOpen(false);
+    },
+    onError: (err: error) => {
+      toast.error(err.message);
+    },
+  });
+
+  const handleSubmit = () => {
+    mutate(row.id);
   };
 
   return (
@@ -149,10 +174,18 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
             Edit
           </MenuItem>
 
-          <MenuItem onClick={handleClosePopover} sx={{ color: 'error.main' }}>
+          <MenuItem onClick={handleClickOpen} sx={{ color: 'error.main' }}>
             <Iconify icon="solar:trash-bin-trash-bold" />
             Delete
           </MenuItem>
+          <DialogDelete
+            title="Apakah anda yakin akan hapus"
+            description="data yang telah di hapus tidak akan kembali"
+            setOpen={setOpen}
+            open={open}
+            Submit={handleSubmit}
+            pending={isPending}
+          />
         </MenuList>
       </Popover>
     </>

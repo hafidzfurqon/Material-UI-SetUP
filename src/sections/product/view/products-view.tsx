@@ -11,9 +11,8 @@ import { DashboardContent } from 'src/layouts/dashboard';
 import { ProductItem } from '../product-item';
 import { ProductSort } from '../product-sort';
 import { CartIcon } from '../product-cart-widget';
-import { ProductFilters } from '../product-filters';
-
-import type { FiltersProps } from '../product-filters';
+import { useFetchKegiatan } from 'src/hooks/kegiatan';
+import Loading from 'src/component/Loading';
 
 // ----------------------------------------------------------------------
 
@@ -62,8 +61,6 @@ export function ProductsView() {
 
   const [openFilter, setOpenFilter] = useState(false);
 
-  const [filters, setFilters] = useState<FiltersProps>(defaultFilters);
-
   const handleOpenFilter = useCallback(() => {
     setOpenFilter(true);
   }, []);
@@ -76,21 +73,17 @@ export function ProductsView() {
     setSortBy(newSort);
   }, []);
 
-  const handleSetFilters = useCallback((updateState: Partial<FiltersProps>) => {
-    setFilters((prevValue) => ({ ...prevValue, ...updateState }));
-  }, []);
-
-  const canReset = Object.keys(filters).some(
-    (key) => filters[key as keyof FiltersProps] !== defaultFilters[key as keyof FiltersProps]
-  );
-
+  const { data, isLoading, isFetching } = useFetchKegiatan();
+  if (isLoading || isFetching) {
+    return <Loading />;
+  }
   return (
     <DashboardContent>
       <Typography variant="h4" sx={{ mb: 5 }}>
         Products
       </Typography>
 
-      <CartIcon totalItems={8} />
+      {/* <CartIcon totalItems={8} /> */}
 
       <Box
         display="flex"
@@ -100,23 +93,6 @@ export function ProductsView() {
         sx={{ mb: 5 }}
       >
         <Box gap={1} display="flex" flexShrink={0} sx={{ my: 1 }}>
-          <ProductFilters
-            canReset={canReset}
-            filters={filters}
-            onSetFilters={handleSetFilters}
-            openFilter={openFilter}
-            onOpenFilter={handleOpenFilter}
-            onCloseFilter={handleCloseFilter}
-            onResetFilter={() => setFilters(defaultFilters)}
-            options={{
-              genders: GENDER_OPTIONS,
-              categories: CATEGORY_OPTIONS,
-              ratings: RATING_OPTIONS,
-              price: PRICE_OPTIONS,
-              colors: COLOR_OPTIONS,
-            }}
-          />
-
           <ProductSort
             sortBy={sortBy}
             onSort={handleSort}
@@ -131,9 +107,9 @@ export function ProductsView() {
       </Box>
 
       <Grid container spacing={3}>
-        {_products.map((product) => (
-          <Grid key={product.id} xs={12} sm={6} md={3}>
-            <ProductItem product={product} />
+        {data?.data?.map((kegiatan) => (
+          <Grid key={kegiatan.id} xs={12} sm={6} md={3}>
+            <ProductItem kegiatan={kegiatan} />
           </Grid>
         ))}
       </Grid>
