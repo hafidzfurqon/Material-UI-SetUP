@@ -13,12 +13,14 @@ import { ColorPreview } from 'src/components/color-utils';
 
 export type ProductItemProps = {
   id: string;
-  name: string;
-  price: number;
-  status: string;
-  coverUrl: string;
-  colors: string[];
-  priceSale: number | null;
+  judul: string;
+  image: string;
+  // name: string;
+  // // price: number;
+  // // status: string;
+  // // coverUrl: string;
+  // // colors: string[];
+  // // priceSale: number | null;
 };
 
 export function ProductItem({ kegiatan }: { kegiatan: ProductItemProps }) {

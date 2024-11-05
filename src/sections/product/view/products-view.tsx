@@ -56,6 +56,11 @@ const defaultFilters = {
   category: CATEGORY_OPTIONS[0].value,
 };
 
+type Kegiatan = {
+  id: any;
+  judul: string;
+  image: string;
+};
 export function ProductsView() {
   const [sortBy, setSortBy] = useState('featured');
 
@@ -107,7 +112,7 @@ export function ProductsView() {
       </Box>
 
       <Grid container spacing={3}>
-        {data?.data?.map((kegiatan) => (
+        {data?.data?.map((kegiatan: Kegiatan) => (
           <Grid key={kegiatan.id} xs={12} sm={6} md={3}>
             <ProductItem kegiatan={kegiatan} />
           </Grid>
