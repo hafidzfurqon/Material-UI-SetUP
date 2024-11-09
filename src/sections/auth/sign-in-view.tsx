@@ -90,7 +90,7 @@ export function SignInView() {
           variant="contained"
           disabled={isPending}
         >
-          Sign in
+          {isPending ? 'Loading...' : ' Sign in'}
         </LoadingButton>
       </Box>
     </Stack>

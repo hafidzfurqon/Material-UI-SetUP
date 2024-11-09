@@ -15,18 +15,18 @@ import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
 
 import { TableNoData } from '../table-no-data';
-import { UserTableRow } from '../dokumentasi-table-row';
-import { UserTableHead } from '../dokumentasi-table-head';
+import { DokumentasiTableRow } from '../dokumentasi-table-row';
+import { DokumentasiTableHead } from '../dokumentasi-table-head';
 import { TableEmptyRows } from '../table-empty-rows';
-import { UserTableToolbar } from '../dokumentasi-table-toolbar';
+import { DokumentasiTableToolbar } from '../dokumentasi-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 
 import type { DokumentasiProps } from '../dokumentasi-table-row';
-import { useFetchAllUsers } from 'src/hooks/users';
 import { Link } from 'react-router-dom';
 import { router } from 'src/hooks/routing/useRouting';
 import { useFetchDokumentasi } from 'src/hooks/dokumentasi/useFetchDokumentasi';
 import Loading from 'src/component/Loading';
+
 // ----------------------------------------------------------------------
 
 export function Dokumentasi() {
@@ -36,6 +36,7 @@ export function Dokumentasi() {
   if (isLoading) {
     return <Loading />;
   }
+
 
   const dataFiltered: DokumentasiProps[] = applyFilter({
     inputData: data.data,
@@ -66,7 +67,7 @@ export function Dokumentasi() {
       </Box>
 
       <Card>
-        <UserTableToolbar
+        <DokumentasiTableToolbar
           numSelected={table.selected.length}
           filterName={filterName}
           onFilterName={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,7 +78,7 @@ export function Dokumentasi() {
         <Scrollbar>
           <TableContainer sx={{ overflow: 'unset' }}>
             <Table sx={{ minWidth: 800 }}>
-              <UserTableHead
+              <DokumentasiTableHead
                 order={table.order}
                 orderBy={table.orderBy}
                 rowCount={data.data.length}
@@ -86,7 +87,7 @@ export function Dokumentasi() {
                 onSelectAllRows={(checked) =>
                   table.onSelectAllRows(
                     checked,
-                    data.data.map((user: any) => user.id)
+                    data.data.map((dokumentasi: any) => dokumentasi.id)
                   )
                 }
                 headLabel={[
@@ -104,7 +105,7 @@ export function Dokumentasi() {
                     table.page * table.rowsPerPage + table.rowsPerPage
                   )
                   .map((row) => (
-                    <UserTableRow
+                    <DokumentasiTableRow
                       key={row.id}
                       row={row}
                       selected={table.selected.includes(row.id)}

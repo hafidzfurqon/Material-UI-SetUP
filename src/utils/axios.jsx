@@ -53,6 +53,7 @@ export const endpoints = {
     tambah: 'api/dokumentasi/tambah',
     tampilkan: '/api/dokumentasi/tampilkan',
     edit: '/api/dokumentasi/edit',
+    hapus: '/api/dokumentasi/hapus',
   },
   mentoring: {
     semua: '/api/mentoring',

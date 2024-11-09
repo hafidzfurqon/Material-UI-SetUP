@@ -50,8 +50,8 @@ export const navData = [
     icon: Anothericon('ic-glass-message'),
   },
   {
-    title: 'Not found',
-    path: '/404',
-    icon: icon('ic-disabled'),
+    title: 'Pendaftaran',
+    path: '/pendaftar',
+    icon: Kegiatanicon('ic-glass-users'),
   },
 ];
