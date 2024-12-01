@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useContext } from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
@@ -7,11 +7,12 @@ import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgr
 import { varAlpha } from 'src/theme/styles';
 import { AuthLayout } from 'src/layouts/auth';
 import { DashboardLayout } from 'src/layouts/dashboard';
-import { useQuery } from '@tanstack/react-query';
-import axiosInstance, { endpoints } from 'src/utils/axios';
-import { MentoringView } from 'src/sections/mentoring/view/mentoring-view';
 import CreateView from 'src/sections/mentoring/crud/CreateView';
 import CreateViewDokumentasi from 'src/sections/dokumentasi/crud/CreateViewDokumentasi';
+import PendaftaranPage from 'src/pages/pendaftaran';
+import { SignUpView } from 'src/sections/auth';
+import { UserContext } from 'src/context/user-context';
+// import { UserContext } from 'src/context/user-context';
 
 // ----------------------------------------------------------------------
 
@@ -38,6 +39,9 @@ export type Users = {
   status?: string;
 };
 
+// const userContext = useContext(UserContext);
+// console.log(userContext);
+
 const renderFallback = (
   <Box display="flex" alignItems="center" justifyContent="center" flex="1 1 auto">
     <LinearProgress
@@ -52,6 +56,10 @@ const renderFallback = (
 );
 
 export function Router() {
+  const userContext: any = useContext(UserContext);
+  // const RoleUser = userContext.user.roles.map((roleName: any) => {
+  //   return roleName.name;
+  // });
   return useRoutes([
     {
       element: (
@@ -110,6 +118,15 @@ export function Router() {
             },
           ],
         },
+        {
+          path: 'pendaftaran',
+          children: [
+            {
+              path: '',
+              element: <PendaftaranPage />,
+            },
+          ],
+        },
       ],
     },
     {
@@ -121,12 +138,23 @@ export function Router() {
       path: '/',
     },
     {
-      path: 'sign-in',
       element: (
         <AuthLayout>
-          <SignInPage />
+          <Suspense fallback={renderFallback}>
+            <Outlet />
+          </Suspense>
         </AuthLayout>
       ),
+      children: [
+        {
+          path: 'sign-in',
+          element: <SignInPage />,
+        },
+        {
+          path: 'sign-up',
+          element: <SignUpView />,
+        },
+      ],
     },
     {
       path: '404',

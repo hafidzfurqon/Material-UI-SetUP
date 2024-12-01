@@ -1,6 +1,6 @@
 import type { IconButtonProps } from '@mui/material/IconButton';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useContext } from 'react';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -19,7 +19,8 @@ import { useMutationLogout } from './useMutationLogout';
 import toast from 'react-hot-toast';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Users } from 'src/routes/sections';
-import { useFetchAuthenticUsers } from 'src/hooks/kegiatan';
+import DialogDelete from 'src/component/DialogDelete';
+import { UserContext } from 'src/context/user-context';
 
 // ----------------------------------------------------------------------
 
@@ -37,26 +38,28 @@ type error = {
 };
 type Userss = Users;
 export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps) {
+  const [open, setOpen] = useState(false);
+  const handleClickOpened = () => {
+    setOpen(true);
+  };
   const router = useRouter();
   const queryClient = useQueryClient();
-  // const { data: authUser, isLoading, isFetching } =
-  const { data: authUser, isLoading, isFetching } = useFetchAuthenticUsers(); //State management
+  const authUser: any = useContext(UserContext);
   const { mutate: Logout, isPending } = useMutationLogout({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['usersData'] });
-      toast.success('Logout Berhasil 🚀');
+      toast.success('Logout Berhasil 🚀', {
+        duration: 2000,
+      });
       router.push('/');
     },
     onError: (error: error) => {
       toast.error(error.message);
     },
   });
-  // console.log(authUser.email);
+  // console.log(authUser.user.email);
   const handleLogout = () => {
-    const konfirmasi = confirm('Kamu akan logout yakin nih?');
-    if (konfirmasi) {
-      Logout();
-    }
+    Logout();
     return;
   };
 
@@ -82,8 +85,8 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
     [handleClosePopover, router]
   );
 
-  if (isLoading || isFetching) {
-    return <Box>Loading..</Box>;
+  if (!authUser) {
+    return <div>Loading...</div>;
   }
   return (
     <>
@@ -99,9 +102,17 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
         }}
         {...other}
       >
-        <Avatar src={authUser.image} alt={_myAccount.displayName} sx={{ width: 1, height: 1 }}>
-          {_myAccount.displayName.charAt(0).toUpperCase()}
-        </Avatar>
+        {authUser ? (
+          <Avatar
+            src={authUser.user.image}
+            alt={_myAccount.displayName}
+            sx={{ width: 1, height: 1 }}
+          >
+            {_myAccount.displayName.charAt(0).toUpperCase()}
+          </Avatar>
+        ) : (
+          'Loading...'
+        )}
       </IconButton>
 
       <Popover
@@ -117,17 +128,25 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
         }}
       >
         <Box sx={{ p: 2, py: 1.5 }}>
-          <Typography variant="subtitle2" noWrap>
-            {authUser?.nama}
-          </Typography>
+          {authUser ? (
+            <>
+              <Typography variant="subtitle2" noWrap>
+                {authUser?.user.nama}
+              </Typography>
 
-          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {authUser?.email}
-          </Typography>
+              <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+                {authUser?.user.email}
+              </Typography>
 
-          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {authUser?.kelas}
-          </Typography>
+              <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+                {authUser?.user.kelas}
+              </Typography>
+            </>
+          ) : (
+            <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+              Loading...
+            </Typography>
+          )}
         </Box>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
@@ -169,7 +188,7 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
 
         <Box sx={{ p: 1 }}>
           <Button
-            onClick={handleLogout}
+            onClick={handleClickOpened}
             fullWidth
             color="error"
             size="medium"
@@ -178,6 +197,14 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
           >
             Logout
           </Button>
+          <DialogDelete
+            title="Apakah anda yakin akan Logout?"
+            description="Anda akan keluar dari dashboard"
+            setOpen={setOpen}
+            open={open}
+            Submit={handleLogout}
+            pending={isPending}
+          />
         </Box>
       </Popover>
     </>

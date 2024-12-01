@@ -51,7 +51,7 @@ export const navData = [
   },
   {
     title: 'Pendaftaran',
-    path: '/pendaftar',
+    path: '/pendaftaran',
     icon: Kegiatanicon('ic-glass-users'),
   },
 ];

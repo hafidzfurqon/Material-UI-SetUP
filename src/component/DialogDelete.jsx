@@ -46,7 +46,7 @@ export default function DialogDelete({ title, description, Submit, open, setOpen
             },
           }}
         >
-          {pending ? 'Deleting...' : 'Delete'}
+          {pending ? 'Loading...' : 'Yakin'}
         </Button>
       </DialogActions>
     </Dialog>

@@ -19,19 +19,24 @@ import { TablePagination } from '@mui/material';
 import { useTable } from 'src/sections/user/view';
 import { Link } from 'react-router-dom';
 import { router } from 'src/hooks/routing/useRouting';
+import toast from 'react-hot-toast';
 
 // ----------------------------------------------------------------------
 
 export function MentoringView() {
   const table = useTable();
   const [sortBy, setSortBy] = useState('latest');
-  const { data: AllMentoring, isLoading } = useFetchMentoring();
+  const { data: AllMentoring, isLoading, error } = useFetchMentoring();
   const handleSort = useCallback((newSort: string) => {
     setSortBy(newSort);
   }, []);
   console.log(AllMentoring);
   if (isLoading) {
     return <Box>Loading...</Box>;
+  }
+
+  if (error) {
+    toast.error(error.message);
   }
   return (
     <DashboardContent>

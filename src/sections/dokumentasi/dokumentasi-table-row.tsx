@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 import Popover from '@mui/material/Popover';
@@ -25,10 +25,12 @@ import { Button } from '@mui/material';
 import { DialogActions } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useUpdateDokumentasi } from 'src/hooks/dokumentasi/useUpdateDokumentasi';
+import { useFetchDokumentasi } from 'src/hooks/dokumentasi/useFetchDokumentasi';
+import Loading from 'src/component/Loading';
 // ----------------------------------------------------------------------
 
 export type DokumentasiProps = {
-  id: any;
+  id?: any;
   judul: string;
   keterangan_dokumentasi: string;
   tanggal_upload: string;
@@ -52,36 +54,29 @@ export function DokumentasiTableRow({ row, selected, onSelectRow }: DokumentasTa
     setOpenPopover(null);
   }, []);
 
-  const roleOrder = [
-    'pembina',
-    'mentor',
-    'alumni',
-    'bph',
-    'pengurus_kegiatan',
-    'pengurus_dokumentasi',
-    'pengurus_rohis',
-  ];
-
-  const formatRoleName = (role: string) => {
-    return role
-      .replace(/_/g, ' ') // Ganti underscore dengan spasi
-      .split(' ') // Pisahkan berdasarkan spasi
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Kapital huruf pertama setiap kata
-      .join(' '); // Gabungkan kembali menjadi string
-  };
   const [opened, setOpened] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleClickOpened = () => {
     setOpened(true);
   };
 
-  const { register, handleSubmit: submitEdit } = useForm();
+  const defaultValues = {
+    judul: row?.judul || '',
+    keterangan_dokumentasi: row?.keterangan_dokumentasi || '',
+    link_gdrive: row?.link_gdrive || '',
+    tanggal_upload: row?.tanggal_upload || '',
+  };
+
+  console.log(defaultValues);
+  const { register, handleSubmit: submitEdit } = useForm({
+    defaultValues,
+  });
 
   const handleClose = () => {
     setOpened(false);
   };
 
-  const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -101,7 +96,20 @@ export function DokumentasiTableRow({ row, selected, onSelectRow }: DokumentasTa
   const handleSubmit = () => {
     DeleteDokumentasi(row.id);
   };
-  const { mutate, isPending: loadingUpdate } = useUpdateDokumentasi(row.id);
+
+  const { mutate, isPending: loadingUpdate } = useUpdateDokumentasi(
+    {
+      onSuccess: () => {
+        toast.success('Dokumentasi Berhasil Diupdate');
+        queryClient.invalidateQueries({ queryKey: ['dokumentasi'] });
+        setOpen(false);
+      },
+      onError: (err: error) => {
+        toast.error(err.message);
+      },
+    },
+    row.id
+  );
   const handleEdit = (data: any) => {
     mutate(data);
     handleClose();
@@ -174,15 +182,14 @@ export function DokumentasiTableRow({ row, selected, onSelectRow }: DokumentasTa
               component: 'form',
             }}
           >
-            <DialogTitle>Subscribe</DialogTitle>
+            <DialogTitle>Update Dokumentasi</DialogTitle>
             <DialogContent>
-              <DialogContentText>
-                To subscribe to this website, please enter your email address here. We will send
-                updates occasionally.
+              <DialogContentText sx={{ mb: 3 }}>
+                Update dokumentasi ini Untuk menghilangkan salah ketik ataupun yang lainnya.
               </DialogContentText>
               <Stack spacing={3}>
                 <TextField
-                  {...register('judul', { required: 'Judul Lengkap is required' })}
+                  {...register('judul')}
                   autoFocus
                   required
                   margin="dense"
@@ -193,7 +200,7 @@ export function DokumentasiTableRow({ row, selected, onSelectRow }: DokumentasTa
                   variant="outlined"
                 />
                 <TextField
-                  {...register('keterangan_dokumentasi', { required: 'keterangan is required' })}
+                  {...register('keterangan_dokumentasi')}
                   margin="dense"
                   id="keterangan"
                   label="keterangan"
@@ -202,7 +209,7 @@ export function DokumentasiTableRow({ row, selected, onSelectRow }: DokumentasTa
                   variant="outlined"
                 />
                 <TextField
-                  {...register('tanggal_upload', { required: 'tanggal_upload is required' })}
+                  {...register('tanggal_upload')}
                   margin="dense"
                   id="jurusan"
                   label="Tanggal Upload"
@@ -212,7 +219,7 @@ export function DokumentasiTableRow({ row, selected, onSelectRow }: DokumentasTa
                   variant="outlined"
                 />
                 <TextField
-                  {...register('link_gdrive', { required: 'link_gdrive is required' })}
+                  {...register('link_gdrive')}
                   margin="dense"
                   id="link_gdrive"
                   label="Link Gdrive"
@@ -231,7 +238,7 @@ export function DokumentasiTableRow({ row, selected, onSelectRow }: DokumentasTa
               <Button onClick={handleClose} variant="outlined">
                 Cancel
               </Button>
-              <Button type="submit">Update</Button>
+              <Button type="submit">{loadingUpdate ? 'Updating' : 'Update'}</Button>
             </DialogActions>
           </Dialog>
 

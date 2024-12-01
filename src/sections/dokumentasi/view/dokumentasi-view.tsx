@@ -31,12 +31,11 @@ import Loading from 'src/component/Loading';
 
 export function Dokumentasi() {
   const table = useTable();
-  const { data, isLoading } = useFetchDokumentasi();
+  const { data, isLoading, isFetching } = useFetchDokumentasi();
   const [filterName, setFilterName] = useState('');
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <Loading />;
   }
-
 
   const dataFiltered: DokumentasiProps[] = applyFilter({
     inputData: data.data,

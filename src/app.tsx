@@ -10,36 +10,30 @@ import { ThemeProvider } from 'src/theme/theme-provider';
 
 import { Iconify } from 'src/components/iconify';
 import { Toaster } from 'react-hot-toast';
+import { UserContext } from './context/user-context';
+import { useFetchAuthenticUsers } from './hooks/kegiatan';
+import Loading from './component/Loading';
 
 // ----------------------------------------------------------------------
 
 export default function App() {
   useScrollToTop();
-  const githubButton = (
-    <Fab
-      size="medium"
-      aria-label="Github"
-      href="https://github.com/minimal-ui-kit/material-kit-react"
-      sx={{
-        zIndex: 9,
-        right: 20,
-        bottom: 20,
-        width: 44,
-        height: 44,
-        position: 'fixed',
-        bgcolor: 'grey.800',
-        color: 'common.white',
-      }}
-    >
-      <Iconify width={24} icon="eva:github-fill" />
-    </Fab>
-  );
+  const { data, isLoading, isPending } = useFetchAuthenticUsers();
+  if (isLoading || isPending) {
+    return <Loading />;
+  }
+  const user = isLoading ? null : data;
 
+  const UserContextValue = {
+    user,
+  };
   return (
     <ThemeProvider>
-      <Router />
-      {/* {githubButton} */}
-      <Toaster position="top-right" />
+      <UserContext.Provider value={UserContextValue}>
+        <Router />
+        {/* {githubButton} */}
+        <Toaster position="top-right" />
+      </UserContext.Provider>
     </ThemeProvider>
   );
 }

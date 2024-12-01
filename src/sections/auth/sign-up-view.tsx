@@ -1,50 +1,54 @@
-import { useState, useCallback } from 'react';
-
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
-import InputAdornment from '@mui/material/InputAdornment';
 
 import { useRouter } from 'src/routes/hooks';
 
-import { Iconify } from 'src/components/iconify';
 import { useForm } from 'react-hook-form';
 import { ListItemButton, Stack } from '@mui/material';
-import { useQueryClient } from '@tanstack/react-query';
-import { useMutationLogin } from './Authentikasi/useMutationLogin';
+import { useMutationPendaftaran } from './Authentikasi/useMutationPendaftaran';
+import { FormLabel } from '@mui/material';
 import toast from 'react-hot-toast';
 
 // ----------------------------------------------------------------------
 type Login = {
-  email: string;
-  password: string;
+  nama: string;
+  motto_hidup: string;
+  kelas: string;
+  alasan_masuk: string;
+  images: string;
+  jurusan: string;
 };
 
 type error = {
   message: string;
 };
 
-export function SignInView() {
+export function SignUpView() {
   const router = useRouter();
-  const queryClient = useQueryClient();
-  const [showPassword, setShowPassword] = useState(false);
-  const { register, handleSubmit } = useForm<Login>();
-  const { mutate, isPending } = useMutationLogin({
+  //   const [showPassword, setShowPassword] = useState(false);
+  const { register, handleSubmit } = useForm();
+  const { mutate, isPending } = useMutationPendaftaran({
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['usersData'] });
-      toast.success('Login Berhasil 🙌');
-      router.push('/dashboard');
+      toast.success('Berhasil Mendaftar Berhasil 🙌');
+      router.push('/sign-in');
     },
     onError: (error: error) => {
-      toast.error(error.message || 'Email atau password salah');
+      toast.error(error.message);
     },
   });
 
-  const OnSubmit: any = (data: any) => {
-    mutate(data);
+  const OnSubmit = (data: any) => {
+    const { image: gambar, ...rest } = data;
+    const formData: any = new FormData();
+    Object.entries(rest).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+    formData.append('image', gambar[0]);
+    mutate(formData);
   };
+
   const renderForm = (
     <Stack spacing={3}>
       <Box
@@ -56,17 +60,81 @@ export function SignInView() {
       >
         <TextField
           fullWidth
-          {...register('email')}
-          label="Email address"
+          {...register('nama')}
+          autoFocus
+          margin="dense"
+          required
+          id="nama"
+          name="nama"
+          label="Nama Lengkap"
           InputLabelProps={{ shrink: true }}
           sx={{ mb: 3 }}
         />
-
         <TextField
+          fullWidth
+          {...register('kelas')}
+          margin="dense"
+          id="kelas"
+          name="kelas"
+          label="Kelas (12)"
+          type="number"
+          InputLabelProps={{ shrink: true }}
+          sx={{ mb: 3 }}
+        />
+        <TextField
+          fullWidth
+          {...register('motto_hidup')}
+          margin="dense"
+          id="motto_hidup"
+          name="motto_hidup"
+          label="Moto Hidup"
+          type="text"
+          InputLabelProps={{ shrink: true }}
+          sx={{ mb: 3 }}
+        />
+        <TextField
+          fullWidth
+          {...register('jurusan')}
+          margin="dense"
+          id="jurusan"
+          name="jurusan"
+          label="Jurusan"
+          type="text"
+          InputLabelProps={{ shrink: true }}
+          sx={{ mb: 3 }}
+        />
+        <TextField
+          fullWidth
+          {...register('alasan_masuk')}
+          margin="dense"
+          id="alasan_masuk"
+          name="alasan_masuk"
+          label="Alasan Masuk"
+          type="text"
+          InputLabelProps={{ shrink: true }}
+          sx={{ mb: 3 }}
+        />
+        <FormLabel
+          sx={{
+            mb: 3,
+          }}
+        >
+          Image (optional)
+          <TextField
+            {...register('image')}
+            margin="dense"
+            id="image"
+            type="file"
+            fullWidth
+            variant="outlined"
+          />
+        </FormLabel>
+
+        {/* <TextField
           fullWidth
           {...register('password')}
           label="Password"
-          InputLabelProps={{ shrink: true }}
+           InputLabelProps={{ shrink: true }}
           type={showPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
@@ -78,7 +146,7 @@ export function SignInView() {
             ),
           }}
           sx={{ mb: 3 }}
-        />
+        /> */}
         <LoadingButton
           fullWidth
           size="large"
@@ -96,7 +164,7 @@ export function SignInView() {
   return (
     <>
       <Box gap={1.5} display="flex" flexDirection="column" alignItems="center" sx={{ mb: 5 }}>
-        <Typography variant="h5">Sign in to RODAMU</Typography>
+        <Typography variant="h5">Daftarkan dirimu RODAMU</Typography>
       </Box>
 
       {renderForm}
@@ -114,7 +182,7 @@ export function SignInView() {
           variant="overline"
           sx={{ color: 'text.secondary', fontWeight: 'fontWeightMedium', mb: 1 }}
         >
-          Belum Daftar ? Register disini
+          Sudah punya akun ? Login disini
         </Typography>
         <ListItemButton
           disableGutters
@@ -136,9 +204,9 @@ export function SignInView() {
               bgcolor: 'var(--layout-nav-item-hover-bg)',
             },
           }}
-          href="/sign-up"
+          href="/sign-in"
         >
-          <Box component="span">Daftar disini</Box>
+          <Box component="span">Login disini</Box>
         </ListItemButton>
       </Box>
     </>
