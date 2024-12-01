@@ -70,4 +70,12 @@ export const endpoints = {
     import: '/api/user/import',
     hapus: '/api/user/hapus',
   },
+  pendaftar: {
+    semua: '/api/pendaftar',
+    tambah: 'api/pendaftar/tambah',
+    tampilkan: '/api/pendaftar/tampilkan',
+    edit: '/api/pendaftar/edit',
+    import: '/api/pendaftar/import',
+    hapus: '/api/pendaftar/hapus',
+  },
 };
