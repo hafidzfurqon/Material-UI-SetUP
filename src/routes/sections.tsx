@@ -56,10 +56,6 @@ const renderFallback = (
 );
 
 export function Router() {
-  const userContext: any = useContext(UserContext);
-  // const RoleUser = userContext.user.roles.map((roleName: any) => {
-  //   return roleName.name;
-  // });
   return useRoutes([
     {
       element: (

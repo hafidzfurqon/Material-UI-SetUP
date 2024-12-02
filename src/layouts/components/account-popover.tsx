@@ -17,10 +17,10 @@ import { useRouter, usePathname } from 'src/routes/hooks';
 import { _myAccount } from 'src/_mock';
 import { useMutationLogout } from './useMutationLogout';
 import toast from 'react-hot-toast';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { Users } from 'src/routes/sections';
 import DialogDelete from 'src/component/DialogDelete';
-import { UserContext } from 'src/context/user-context';
+import { useAppContext } from 'src/context/user-context';
 
 // ----------------------------------------------------------------------
 
@@ -44,7 +44,7 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
   };
   const router = useRouter();
   const queryClient = useQueryClient();
-  const authUser: any = useContext(UserContext);
+  const { UserContextValue: authUser }: any = useAppContext();
   const { mutate: Logout, isPending } = useMutationLogout({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['usersData'] });

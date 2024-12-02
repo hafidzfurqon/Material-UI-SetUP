@@ -17,16 +17,10 @@ import { useDeleteDokumentasi } from 'src/hooks/dokumentasi/useDeleteDokumentasi
 import toast from 'react-hot-toast';
 import { error } from 'src/hooks/error';
 import DialogDelete from 'src/component/DialogDelete';
-import { Dialog, DialogContent, Stack } from '@mui/material';
-import { DialogTitle } from '@mui/material';
-import { DialogContentText } from '@mui/material';
 import { TextField } from '@mui/material';
-import { Button } from '@mui/material';
-import { DialogActions } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useUpdateDokumentasi } from 'src/hooks/dokumentasi/useUpdateDokumentasi';
-import { useFetchDokumentasi } from 'src/hooks/dokumentasi/useFetchDokumentasi';
-import Loading from 'src/component/Loading';
+import { UpdateDialog } from 'src/component/DialogUpdate';
 // ----------------------------------------------------------------------
 
 export type DokumentasiProps = {
@@ -68,7 +62,6 @@ export function DokumentasiTableRow({ row, selected, onSelectRow }: DokumentasTa
     tanggal_upload: row?.tanggal_upload || '',
   };
 
-  console.log(defaultValues);
   const { register, handleSubmit: submitEdit } = useForm({
     defaultValues,
   });
@@ -114,6 +107,50 @@ export function DokumentasiTableRow({ row, selected, onSelectRow }: DokumentasTa
     mutate(data);
     handleClose();
   };
+
+  const FieldRHF = (
+    <>
+      <TextField
+        {...register('judul')}
+        autoFocus
+        required
+        margin="dense"
+        id="nama"
+        label="Judul Dokumentasi"
+        type="text"
+        fullWidth
+        variant="outlined"
+      />
+      <TextField
+        {...register('keterangan_dokumentasi')}
+        margin="dense"
+        id="keterangan"
+        label="keterangan"
+        type="text"
+        fullWidth
+        variant="outlined"
+      />
+      <TextField
+        {...register('tanggal_upload')}
+        margin="dense"
+        id="jurusan"
+        label="Tanggal Upload"
+        type="date"
+        InputLabelProps={{ shrink: true }}
+        fullWidth
+        variant="outlined"
+      />
+      <TextField
+        {...register('link_gdrive')}
+        margin="dense"
+        id="link_gdrive"
+        label="Link Gdrive"
+        type="text"
+        fullWidth
+        variant="outlined"
+      />
+    </>
+  );
   return (
     <>
       <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
@@ -174,73 +211,16 @@ export function DokumentasiTableRow({ row, selected, onSelectRow }: DokumentasTa
             <Iconify icon="solar:pen-bold" />
             Edit
           </MenuItem>
-          <Dialog
-            onSubmit={submitEdit(handleEdit)}
+          <UpdateDialog
+            SubmitForm={submitEdit}
+            SubmitFormValue={handleEdit}
             open={opened}
-            onClose={handleClose}
-            PaperProps={{
-              component: 'form',
-            }}
-          >
-            <DialogTitle>Update Dokumentasi</DialogTitle>
-            <DialogContent>
-              <DialogContentText sx={{ mb: 3 }}>
-                Update dokumentasi ini Untuk menghilangkan salah ketik ataupun yang lainnya.
-              </DialogContentText>
-              <Stack spacing={3}>
-                <TextField
-                  {...register('judul')}
-                  autoFocus
-                  required
-                  margin="dense"
-                  id="nama"
-                  label="Judul Dokumentasi"
-                  type="text"
-                  fullWidth
-                  variant="outlined"
-                />
-                <TextField
-                  {...register('keterangan_dokumentasi')}
-                  margin="dense"
-                  id="keterangan"
-                  label="keterangan"
-                  type="text"
-                  fullWidth
-                  variant="outlined"
-                />
-                <TextField
-                  {...register('tanggal_upload')}
-                  margin="dense"
-                  id="jurusan"
-                  label="Tanggal Upload"
-                  type="date"
-                  InputLabelProps={{ shrink: true }}
-                  fullWidth
-                  variant="outlined"
-                />
-                <TextField
-                  {...register('link_gdrive')}
-                  margin="dense"
-                  id="link_gdrive"
-                  label="Link Gdrive"
-                  type="text"
-                  fullWidth
-                  variant="outlined"
-                />
-              </Stack>
-            </DialogContent>
-            <DialogActions
-              sx={{
-                px: 3,
-                py: 3,
-              }}
-            >
-              <Button onClick={handleClose} variant="outlined">
-                Cancel
-              </Button>
-              <Button type="submit">{loadingUpdate ? 'Updating' : 'Update'}</Button>
-            </DialogActions>
-          </Dialog>
+            title="Update Dokumentasi"
+            subTitle=" Update dokumentasi ini Untuk menghilangkan salah ketik ataupun yang lainnya."
+            pending={loadingUpdate}
+            setOpen={setOpened}
+            field={FieldRHF}
+          />
 
           <MenuItem onClick={handleClickOpen} sx={{ color: 'error.main' }}>
             <Iconify icon="solar:trash-bin-trash-bold" />
