@@ -166,9 +166,7 @@ export function SignUpView() {
       <Box gap={1.5} display="flex" flexDirection="column" alignItems="center" sx={{ mb: 5 }}>
         <Typography variant="h5">Daftarkan dirimu RODAMU</Typography>
       </Box>
-
       {renderForm}
-
       <Box
         sx={{
           my: 2,

@@ -12,6 +12,7 @@ import CreateViewDokumentasi from 'src/sections/dokumentasi/crud/CreateViewDokum
 import PendaftaranPage from 'src/pages/pendaftaran';
 import { SignUpView } from 'src/sections/auth';
 import { UserContext } from 'src/context/user-context';
+import CreateViewPendaftar from 'src/sections/pendaftaran/crud/CreateViewPendaftar';
 // import { UserContext } from 'src/context/user-context';
 
 // ----------------------------------------------------------------------
@@ -120,6 +121,10 @@ export function Router() {
             {
               path: '',
               element: <PendaftaranPage />,
+            },
+            {
+              path: 'create',
+              element: <CreateViewPendaftar />,
             },
           ],
         },

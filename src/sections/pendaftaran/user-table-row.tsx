@@ -21,6 +21,10 @@ import { useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { error } from 'src/hooks/error';
 import { useMutationDeletePendaftar } from 'src/hooks/pendaftar/useMutationDeletePendaftar';
+import { useMutationUpdatePendaftar } from 'src/hooks/pendaftar/useMutationUpdatePendaftar';
+import { useForm } from 'react-hook-form';
+import { UpdateDialog } from 'src/component/DialogUpdate';
+import { FormLabel, TextField } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -51,8 +55,28 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
   const handleClosePopover = useCallback(() => {
     setOpenPopover(null);
   }, []);
-
+  const defaultValues = {
+    nama: row?.nama || '',
+    kelas: row?.kelas || '',
+    motto_hidup: row?.motto_hidup || '',
+    jurusan: row?.jurusan || '',
+    alasan_masuk: row?.alasan_masuk || '',
+  };
+  const [opened, setOpened] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const handleClickOpened = () => {
+    setOpened(true);
+  };
+
+  const { register, handleSubmit: submitEdit } = useForm({
+    defaultValues,
+  });
+
+  const handleClose = () => {
+    setOpened(false);
+  };
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -73,6 +97,40 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
     mutate(row.id);
   };
 
+  const { mutate: UpdateUser, isPending: loadingUpdate } = useMutationUpdatePendaftar(
+    {
+      onSuccess: () => {
+        toast.success('Dokumentasi Berhasil Diupdate');
+        queryClient.invalidateQueries({ queryKey: ['dokumentasi'] });
+        setOpen(false);
+      },
+      onError: (err: error) => {
+        toast.error(err.message);
+      },
+    },
+    row.id
+  );
+
+  const handleEdit = (data: any) => {
+    UpdateUser(data);
+    handleClose();
+  };
+  const FieldRHF = (
+    <>
+      <TextField
+        fullWidth
+        {...register('nama')}
+        autoFocus
+        margin="dense"
+        required
+        id="nama"
+        name="nama"
+        label="Nama Lengkap"
+        InputLabelProps={{ shrink: true }}
+        sx={{ mb: 3 }}
+      />
+    </>
+  );
   return (
     <>
       <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
@@ -130,11 +188,16 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
             },
           }}
         >
-          <MenuItem onClick={handleClosePopover}>
-            <Iconify icon="solar:pen-bold" />
-            Edit
-          </MenuItem>
-
+          <UpdateDialog
+            SubmitForm={submitEdit}
+            SubmitFormValue={handleEdit}
+            open={opened}
+            title="Update User"
+            subTitle=" Update User ini Untuk menghilangkan salah ketik ataupun yang lainnya."
+            pending={loadingUpdate}
+            setOpen={setOpened}
+            field={FieldRHF}
+          />
           <MenuItem onClick={handleClickOpen} sx={{ color: 'error.main' }}>
             <Iconify icon="solar:trash-bin-trash-bold" />
             Delete

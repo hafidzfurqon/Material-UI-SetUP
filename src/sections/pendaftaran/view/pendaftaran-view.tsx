@@ -27,6 +27,7 @@ import { Link } from 'react-router-dom';
 import { router } from 'src/hooks/routing/useRouting';
 import { useFetchPendaftar } from 'src/hooks/pendaftar/useFetchPendaftar';
 import Loading from 'src/component/Loading';
+import { useRouter } from 'src/routes/hooks';
 
 // ----------------------------------------------------------------------
 
@@ -49,21 +50,9 @@ export function PendaftaranView() {
     <DashboardContent>
       <Box display="flex" alignItems="center" mb={5}>
         <Typography variant="h4" flexGrow={1}>
-          Users
+          List Pendaftar
         </Typography>
         <Box display="flex" gap={2}>
-          {' '}
-          {/* Tambahkan gap antara tombol */}
-          {/* <Link to={router.users.create}> */}
-          <Button
-            variant="contained"
-            color="inherit"
-            startIcon={<Iconify icon="mingcute:add-line" />}
-          >
-            Tambah user
-          </Button>
-          {/* </Link> */}
-          {/* <Link to={router.users.import}> */} {/* Ganti dengan route import yang sesuai */}
           <Button
             variant="contained"
             color="inherit"

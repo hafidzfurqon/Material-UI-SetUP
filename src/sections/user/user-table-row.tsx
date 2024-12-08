@@ -100,7 +100,7 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
     defaultValues,
   });
 
-  const handleClose = () => {
+  const handleClose: any = () => {
     setOpened(false);
   };
 

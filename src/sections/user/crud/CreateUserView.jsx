@@ -164,6 +164,7 @@ const CreateUserView = () => {
                 <MenuItem value="bph">BPH</MenuItem>
                 <MenuItem value="pengurus_kegiatan">Pengurus Kegiatan</MenuItem>
                 <MenuItem value="pengurus_dokumentasi">Pengurus Dokumentasi</MenuItem>
+                <MenuItem value="pengurus_galeri">Pengurus Galeri</MenuItem>
                 <MenuItem value="pengurus_rohis">Pengurus Rohis</MenuItem>
               </Select>
             </FormLabel>

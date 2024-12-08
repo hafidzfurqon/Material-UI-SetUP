@@ -13,4 +13,8 @@ export const router = {
     list: '/dokumentasi',
     create: '/dokumentasi/create',
   },
+  pendaftar: {
+    list: '/pendaftaran',
+    create: '/pendaftaran/create',
+  },
 };

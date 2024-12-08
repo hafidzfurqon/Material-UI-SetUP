@@ -90,9 +90,11 @@ export function LandingPage() {
                   mx: { xs: 'auto', md: 'unset' },
                 }}
               >
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit quia soluta
-                eaque, voluptatibus. eaque, voluptatibus. eaque, voluptatibus. eaque, voluptatibus.
-                eaque, voluptatibus.
+                Menjadi barisan kuat untuk berdakwah, menjadi perisai kuat untuk islam, dan jadikan
+                ikatan keislaman ini sebagai pondasi pada diri pribadi untuk men-Tauhidkan Agama
+                Allah💪🏻🕌. Bismillah, Hamasah, for Lillah.
+                <br />
+                #KEEPLILLAHSTAYINDAKWAH🕋
               </Typography>
               <Box
                 sx={{
