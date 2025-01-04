@@ -19,9 +19,12 @@ import { SvgColor } from 'src/components/svg-color';
 export type PostItemProps = {
   id: string;
   title: string;
+  judul?: string;
   coverUrl: string;
+  image?: string;
   totalViews: number;
   description: string;
+  deskripsi?: string;
   totalShares: number;
   totalComments: number;
   totalFavorites: number;

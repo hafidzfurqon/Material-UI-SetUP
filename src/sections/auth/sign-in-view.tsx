@@ -15,6 +15,7 @@ import { ListItemButton, Stack } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 import { useMutationLogin } from './Authentikasi/useMutationLogin';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 type Login = {
@@ -116,30 +117,60 @@ export function SignInView() {
         >
           Belum Daftar ? Register disini
         </Typography>
-        <ListItemButton
-          disableGutters
-          sx={{
-            pl: 2,
-            py: 1,
-            gap: 3,
-            // display : 'flex',
-            display: 'flex',
-            mt: 2,
-            pr: 1.5,
-            borderRadius: 0.75,
-            typography: 'body2',
-            fontWeight: 'fontWeightMedium',
-            minHeight: 'var(--layout-nav-item-height)',
-            bgcolor: 'var(--layout-nav-item-active-bg)',
-            color: 'var(--layout-nav-item-active-color)',
-            '&:hover': {
-              bgcolor: 'var(--layout-nav-item-hover-bg)',
-            },
-          }}
-          href="/sign-up"
+        <Box
+          sx={{ mx: 3, gap: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
         >
-          <Box component="span">Daftar disini</Box>
-        </ListItemButton>
+          <ListItemButton
+            disableGutters
+            sx={{
+              pl: 2,
+              py: 1,
+              gap: 3,
+              // display : 'flex',
+              display: 'flex',
+              mt: 2,
+
+              pr: 1.5,
+              borderRadius: 0.75,
+              typography: 'body2',
+              fontWeight: 'fontWeightMedium',
+              minHeight: 'var(--layout-nav-item-height)',
+              bgcolor: 'var(--layout-nav-item-active-bg)',
+              color: 'var(--layout-nav-item-active-color)',
+              '&:hover': {
+                bgcolor: 'var(--layout-nav-item-hover-bg)',
+              },
+            }}
+            href="/"
+          >
+            <Box component="span">Kembali</Box>
+          </ListItemButton>
+          <ListItemButton
+            disableGutters
+            sx={{
+              pl: 2,
+              py: 1,
+              gap: 3,
+              // display : 'flex',
+              display: 'flex',
+              mt: 2,
+
+              pr: 1.5,
+              borderRadius: 0.75,
+              typography: 'body2',
+              fontWeight: 'fontWeightMedium',
+              minHeight: 'var(--layout-nav-item-height)',
+              bgcolor: 'var(--layout-nav-item-active-bg)',
+              color: 'var(--layout-nav-item-active-color)',
+              '&:hover': {
+                bgcolor: 'var(--layout-nav-item-hover-bg)',
+              },
+            }}
+            href="/sign-up"
+          >
+            <Box component="span">Daftar disini</Box>
+          </ListItemButton>
+        </Box>
       </Box>
     </>
   );

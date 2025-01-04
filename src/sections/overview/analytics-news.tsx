@@ -14,6 +14,8 @@ import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
 
 import type { PostItemProps } from '../blog/post-item';
+import { Link } from 'react-router-dom';
+import { router } from 'src/hooks/routing/useRouting';
 
 // ----------------------------------------------------------------------
 
@@ -37,13 +39,15 @@ export function AnalyticsNews({ title, subheader, list, ...other }: Props) {
       </Scrollbar>
 
       <Box sx={{ p: 2, textAlign: 'right' }}>
-        <Button
-          size="small"
-          color="inherit"
-          endIcon={<Iconify icon="eva:arrow-ios-forward-fill" width={18} sx={{ ml: -0.5 }} />}
-        >
-          View all
-        </Button>
+        <Link to={router.kegiatan.list}>
+          <Button
+            size="small"
+            color="inherit"
+            endIcon={<Iconify icon="eva:arrow-ios-forward-fill" width={18} sx={{ ml: -0.5 }} />}
+          >
+            Lihat Semua
+          </Button>
+        </Link>
       </Box>
     </Card>
   );
@@ -67,20 +71,20 @@ function PostItem({ sx, item, ...other }: BoxProps & { item: Props['list'][numbe
     >
       <Avatar
         variant="rounded"
-        alt={item.title}
-        src={item.coverUrl}
+        alt={item.judul}
+        src={item.image}
         sx={{ width: 48, height: 48, flexShrink: 0 }}
       />
 
       <ListItemText
-        primary={item.title}
-        secondary={item.description}
+        primary={item.judul}
+        secondary={item.deskripsi}
         primaryTypographyProps={{ noWrap: true, typography: 'subtitle2' }}
         secondaryTypographyProps={{ mt: 0.5, noWrap: true, component: 'span' }}
       />
 
       <Box sx={{ flexShrink: 0, color: 'text.disabled', typography: 'caption' }}>
-        {fToNow(item.postedAt)}
+        {/* {fToNow(item.postedAt)} */}
       </Box>
     </Box>
   );

@@ -13,6 +13,10 @@ import { ProductSort } from '../product-sort';
 import { CartIcon } from '../product-cart-widget';
 import { useFetchKegiatan } from 'src/hooks/kegiatan';
 import Loading from 'src/component/Loading';
+import { Button } from '@mui/material';
+import { Iconify } from 'src/components/iconify';
+import { router } from 'src/hooks/routing/useRouting';
+import { Link } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
@@ -60,6 +64,8 @@ type Kegiatan = {
   id: any;
   judul: string;
   image: string;
+  deskripsi: string;
+  tanggal_kegiatan: string;
 };
 export function ProductsView() {
   const [sortBy, setSortBy] = useState('featured');
@@ -84,11 +90,20 @@ export function ProductsView() {
   }
   return (
     <DashboardContent>
-      <Typography variant="h4" sx={{ mb: 5 }}>
-        Kegiatan
-      </Typography>
-
-      {/* <CartIcon totalItems={8} /> */}
+      <Box display="flex" alignItems="center" mb={5}>
+        <Typography variant="h4" flexGrow={1}>
+          Kegiatan
+        </Typography>
+        <Link to={router.kegiatan.create}>
+          <Button
+            variant="contained"
+            color="inherit"
+            startIcon={<Iconify icon="mingcute:add-line" />}
+          >
+            Tambah Kegiatan
+          </Button>
+        </Link>
+      </Box>
 
       <Box
         display="flex"
@@ -113,7 +128,7 @@ export function ProductsView() {
 
       <Grid container spacing={3}>
         {data?.data?.map((kegiatan: Kegiatan) => (
-          <Grid key={kegiatan.id} xs={12} sm={6} md={3}>
+          <Grid key={kegiatan.id} xs={12} sm={6} md={4}>
             <ProductItem kegiatan={kegiatan} />
           </Grid>
         ))}

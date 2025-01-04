@@ -17,4 +17,8 @@ export const router = {
     list: '/pendaftaran',
     create: '/pendaftaran/create',
   },
+  kegiatan: {
+    list: '/kegiatan',
+    create: '/kegiatan/create',
+  },
 };

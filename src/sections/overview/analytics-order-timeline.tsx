@@ -18,11 +18,15 @@ import { fDateTime } from 'src/utils/format-time';
 type Props = CardProps & {
   title?: string;
   subheader?: string;
+  nama_mentor?: string;
   list: {
     id: string;
     type: string;
     title: string;
     time: string | number | null;
+    nama_mentor?: string;
+    materi_singkat?: string;
+    tanggal_mentoring?: string;
   }[];
 };
 
@@ -59,24 +63,10 @@ type ItemProps = TimelineItemProps & {
 function Item({ item, lastItem, ...other }: ItemProps) {
   return (
     <TimelineItem {...other}>
-      <TimelineSeparator>
-        <TimelineDot
-          color={
-            (item.type === 'order1' && 'primary') ||
-            (item.type === 'order2' && 'success') ||
-            (item.type === 'order3' && 'info') ||
-            (item.type === 'order4' && 'warning') ||
-            'error'
-          }
-        />
-        {lastItem ? null : <TimelineConnector />}
-      </TimelineSeparator>
-
       <TimelineContent>
-        <Typography variant="subtitle2">{item.title}</Typography>
-
+        <Typography variant="subtitle2">{item.nama_mentor}</Typography>
         <Typography variant="caption" sx={{ color: 'text.disabled' }}>
-          {fDateTime(item.time)}
+          {fDateTime(item.tanggal_mentoring)}
         </Typography>
       </TimelineContent>
     </TimelineItem>

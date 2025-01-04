@@ -13,6 +13,7 @@ import PendaftaranPage from 'src/pages/pendaftaran';
 import { SignUpView } from 'src/sections/auth';
 import { UserContext } from 'src/context/user-context';
 import CreateViewPendaftar from 'src/sections/pendaftaran/crud/CreateViewPendaftar';
+import CreateKegiatan from 'src/sections/product/crud/CreateKegiatan';
 // import { UserContext } from 'src/context/user-context';
 
 // ----------------------------------------------------------------------
@@ -85,8 +86,17 @@ export function Router() {
           ],
         },
         {
-          path: 'products',
-          element: <ProductsPage />,
+          path: 'kegiatan',
+          children: [
+            {
+              path: '',
+              element: <ProductsPage />,
+            },
+            {
+              path: 'create',
+              element: <CreateKegiatan />,
+            },
+          ],
         },
         { path: 'blog', element: <BlogPage /> },
         {

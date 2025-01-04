@@ -103,11 +103,7 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
         {...other}
       >
         {authUser ? (
-          <Avatar
-            src={authUser.user.image}
-            alt={_myAccount.displayName}
-            sx={{ width: 1, height: 1 }}
-          >
+          <Avatar src={authUser?.user?.image} alt="sdsdds" sx={{ width: 1, height: 1 }}>
             {_myAccount.displayName.charAt(0).toUpperCase()}
           </Avatar>
         ) : (
@@ -139,7 +135,7 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-                {authUser?.user.kelas}
+                Kelas : {authUser?.user.kelas}
               </Typography>
             </>
           ) : (

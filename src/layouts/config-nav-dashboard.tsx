@@ -26,7 +26,7 @@ export const navData = [
   },
   {
     title: 'Kegiatan',
-    path: '/products',
+    path: '/kegiatan',
     icon: Kegiatanicon('ic-glass-users'),
     info: (
       <Label color="error" variant="inverted">
